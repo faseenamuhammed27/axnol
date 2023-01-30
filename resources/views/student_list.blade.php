@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav">
           <li><a href="/">Home</a></li>
           <li class="active"><a href="/students-list">Students List</a></li>
-          <li class="active"><a href="/dependent-dropdown">Add Students</a></li>
+          <li class="active"><a href="/add-students">Add Students</a></li>
         </ul>
       </div>
     </div>
@@ -51,9 +51,9 @@
               <tr>
                 <td>{{$key+1}}</td>
                 <td>{{ucfirst($item->name)}}</td>
-                <td>{{$item->country}}</td>
-                <td>{{$item->state}}</td>
-                <td>{{$item->image}}</td>
+                <td>{{$item->cname}}</td>
+                <td>{{$item->sname}}</td>
+                <td> <img class="coupons" src="'.$item->image.'"/>'</td>
   
               </tr>
               @endforeach

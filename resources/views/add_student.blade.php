@@ -26,14 +26,15 @@
   </nav>
 
  
-    <div class="container mt-4">
+    <div >
         <div class="row justify-content-center">
             <div class="col-md-5">
                  <div class="container">
-                <form>
-                  <div class="container" style="background-color:white">
- <button id="btn">Add row</button>
-          <table border="1" class="table table-hover">
+        <form action="/store-student" method="POST">
+          <input type="hidden" name="_token" value="{{csrf_token()}}">
+                  <div  style="background-color:white">
+          <button id="btn">Add row</button>
+          <table id="tabley" border="1" class="table table-hover">
             <thead>
               <th>Sl No</th>
               <th>Name</th>
@@ -47,17 +48,17 @@
             
               <tr>
                 <td>1</td>
-                <td><input type="text" class="form-control" placeholder="First name"></td>
-                <td><select  id="country-dd" class="form-control">
+                <td><input type="text" name="name" class="form-control" placeholder="First name"></td>
+                <td><select  id="country-dd" name="country_id" class="form-control">
                             <option value="">Select Country</option>
                             @foreach ($countries as $data)
-                            <option value="{{$data->id}}">
+                            <option  value="{{$data->id}}">
                                 {{$data->name}}
                             </option>
                             @endforeach
                         </select></td>
                 <td><div class="form-group mb-3">
-                        <select id="state-dd" class="form-control">
+                        <select id="state-dd" name="state_id" class="form-control">
                         </select>
                     </div></td>
                 <td> <input type="file" id="myFile" name="filename"></td>
@@ -69,6 +70,9 @@
             </tbody>
           </table>
         </div>
+          <div >
+            <input type="submit" value="Submit" class="btn btn-primary">
+          </div>
                 </form>
               </div>
             </div>
@@ -93,7 +97,7 @@
                   console.log("Hello world!");
                         $('#state-dd').html('<option value="">Select State</option>');
                         $.each(result.states, function (key, value) {
-                            $("#state-dd").append('<option value="' + value
+                            $("#state-dd").append('<option name="state_id" value="' + value
                                 .id + '">' + value.name + '</option>');
                         });
                        
@@ -106,31 +110,20 @@
 
 
         var count=1;
-$("#btn").click(function(){
-   console.log(count);
-   addNewRow(count);
-  // $("#container").append(addNewRow(count));
-  count++;
-});
+       $("#btn").click(function(){
+          console.log(count);
+          sno=count++;              
+          $("#tabley").append(addNewRow(count,sno));
+       });
 
-function addNewRow(count){
-   console.log("Hello worlddd!");
-  var newrow='<div class="row">'+
-    '<div class="col-md-4">'+
-        '<div class="form-group label-floating">'+
-            '<label class="control-label">Name '+count+'</label>'+
-            '<input type="text" class="form-control" v-model="act" >'+
-        '</div>'+
-    '</div>'+
-    '<div class="col-md-4">'+
-        '<div class="form-group label-floating">'+
-            '<label class="control-label">Position '+count+'</label>'+
-            '<input type="text" class="form-control" v-model="section">'+
-        '</div>'+
-    '</div>'+    
-'</div>';
-  return newrow;
-}
+      function addNewRow(count,sno){
+        console.log("5678");
+        var newrow='<tbody><tr><td>'+sno+'</td><td><input type="text" name="name" class="form-control" placeholder="First name"></td><td><select  id="country-dd" name="country_id" class="form-control"><option value="">Select Country</option> @foreach ($countries as $data)<option  value="{{$data->id}}"> {{$data->name}}  </option>  @endforeach </select></td>  <td><div class="form-group mb-3"> <select id="state-dd" name="state_id" class="form-control"> </select></div></td>  <td> <input type="file" id="myFile" name="filename"></td>  </tr>';
+
+         console.log("1234");
+         console.log(newrow);
+         return newrow;
+        }
     </script>
 
 

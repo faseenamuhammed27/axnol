@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Students;
 use App\Models\Marks;
+use DB;
 use Session;
 use Validator;
 class StudentController extends Controller
@@ -16,9 +17,14 @@ class StudentController extends Controller
      */
     public function index()
     { 
-        $data = Students::get();
+        // $data = Students::get();
     	// dd(1);
-
+        $data = DB::table('students')
+    ->join('country', 'country.id', '=', 'students.country')
+    ->join('state', 'state.id', '=', 'students.state')
+    ->select('students.name','students.image','country.name as cname','state.name as sname')
+    ->get();
+    // dd($data);
         return view('student_list',  compact('data'));
     }
     public function studet_details()
@@ -47,6 +53,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+    	// dd($request->all());
         $validator = Validator::make($request->all(), [
             'name'         => 'required|unique:students,name,NULL,id,deleted_at,NULL',
         ]);
@@ -56,9 +63,9 @@ class StudentController extends Controller
 
         Students::create([
             'name'      => $request->name,
-            'age'       => $request->age,
-            'gender'    => $request->gender,
-            'teacher'   => $request->teacher,
+            'country'       => $request->country_id,
+            'state'    => $request->state_id,
+            'image'   => $request->filename,
         ]);
       
         return back()->with('success_reg','Student Added Successfully');

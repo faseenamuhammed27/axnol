@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 //routes for student CRUD
 Route::get('students-list', [StudentController::class, 'index']);
-Route::get('add-students', [StudentController::class, 'studet_details']);
-Route::get('dependent-dropdown', [DropdownController::class, 'index']);
+Route::post('store-student', [StudentController::class, 'store']);
+Route::get('add-students', [DropdownController::class, 'index']);
 Route::post('fetch-states', [DropdownController::class, 'fetchState']);
 Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
