@@ -53,7 +53,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-    	// dd($request->all());
+    	dd($request->all());
         $validator = Validator::make($request->all(), [
             'name'         => 'required|unique:students,name,NULL,id,deleted_at,NULL',
         ]);
